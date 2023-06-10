@@ -33,10 +33,7 @@ if (isset($_SESSION["usuario"])) {
 	</div>
 </div>
 
-<FilesMatch "\.(jpg|jpeg|png|gif)$">
-    Order Allow
-    Allow from all
-</FilesMatch>
+
 
  <!-- Imagen -->
  <img src="admin.gif" alt="admin.gif">

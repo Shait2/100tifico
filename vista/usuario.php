@@ -29,10 +29,6 @@ if (isset($_SESSION["usuario"])) {
 
 
 <!-- Inicio del Carrusel -->
-<FilesMatch "\.(jpg|jpeg|png|gif)$">
-    Order Allow,Deny
-    Allow from all
-</FilesMatch>
 <div id="carouselExampleInterval" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active" data-interval="3000">
