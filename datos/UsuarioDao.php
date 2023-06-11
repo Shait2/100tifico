@@ -20,8 +20,8 @@ class UsuarioDao extends Conexion
     /**
      * Metodo que sirve para validar el login
      *
-     * @param      object         $usuario
-     * @return     boolean
+     * @param  object  $usuario
+     * @return boolean
      */
     public static function login($usuario)
     {
@@ -36,26 +36,18 @@ class UsuarioDao extends Conexion
 
         $resultado->execute();
 
-        if ($resultado->rowCount() > 0) {
-            $filas = $resultado->fetch();
-            if ($filas["usuario"] == $usuario->getUsuario()
-                && $filas["password"] == $usuario->getPassword()) {
-                return true;
-            }
-        }
-
-        return false;
+        return $resultado->rowCount() > 0;
     }
 
     /**
      * Metodo que sirve obtener un usuario
      *
-     * @param      object         $usuario
-     * @return     object
+     * @param  object  $usuario
+     * @return object
      */
     public static function getUsuario($usuario)
     {
-        $query = "SELECT id,nombre,email,usuario,privilegio,fecha_registro FROM usuarios WHERE usuario = :usuario AND password = :password";
+        $query = "SELECT id, nombre, email, usuario, privilegio, fecha_registro FROM usuarios WHERE usuario = :usuario AND password = :password";
 
         self::getConexion();
 
@@ -82,12 +74,12 @@ class UsuarioDao extends Conexion
     /**
      * Metodo que sirve para registrar usuarios
      *
-     * @param      object         $usuario
-     * @return     boolean
+     * @param  object  $usuario
+     * @return boolean
      */
     public static function registrar($usuario)
     {
-        $query = "INSERT INTO usuarios (nombre,email,usuario,password,privilegio) VALUES (:nombre,:email,:usuario,:password,:privilegio)";
+        $query = "INSERT INTO usuarios (nombre, email, usuario, password, privilegio) VALUES (:nombre, :email, :usuario, :password, :privilegio)";
 
         self::getConexion();
 
@@ -99,10 +91,6 @@ class UsuarioDao extends Conexion
         $resultado->bindValue(":password", $usuario->getPassword());
         $resultado->bindValue(":privilegio", $usuario->getPrivilegio());
 
-        if ($resultado->execute()) {
-            return true;
-        }
-
-        return false;
+        return $resultado->execute();
     }
 }

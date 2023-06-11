@@ -13,19 +13,11 @@ class UsuarioControlador
 
         $login_exitoso = UsuarioDao::login($obj_usuario);
 
-        if ($login_exitoso) {
-            // Registrar el inicio de sesión exitoso en el log
-            self::registrarIntento($usuario, true);
-        } else {
-            // Registrar el intento fallido en el log
-            self::registrarIntento($usuario, false);
-        }
+        self::registrarIntento($usuario, $login_exitoso);
 
         return $login_exitoso;
-        //return UsuarioDao::login($obj_usuario);
     }
 
-    //metodo para reistrar los intentos en el log de la base de datos
     private static function registrarIntento($usuario, $exito)
     {
         $ip = $_SERVER['REMOTE_ADDR'];
@@ -34,7 +26,6 @@ class UsuarioControlador
         $sistemaOperativo = self::obtenerSistemaOperativo($navegador);
         $intentos = $exito ? 'exitoso' : 'fallido';
 
-        // Insertar los datos del intento en el log
         $con = Conexion::conectar();
         $stmt = $con->prepare("INSERT INTO log (usuario, ip, navegador, fecha, sistema_operativo, intentos) VALUES (:usuario, :ip, :navegador, :fecha, :sistemaOperativo, :intentos)");
         $stmt->bindValue(':usuario', $usuario);
@@ -46,8 +37,8 @@ class UsuarioControlador
         $stmt->execute();
     }
 
-
-    private static function obtenerSistemaOperativo($userAgent) {
+    private static function obtenerSistemaOperativo($userAgent)
+    {
         $sistemasOperativos = array(
             '/windows nt 11/i'      => 'Windows 11',
             '/windows nt 10/i'      => 'Windows 10',
@@ -77,13 +68,12 @@ class UsuarioControlador
 
         foreach ($sistemasOperativos as $regex => $sistemaOperativo) {
             if (preg_match($regex, $userAgent)) {
-                    return $sistemaOperativo;
-                }
+                return $sistemaOperativo;
+            }
         }
 
-            return 'Desconocido';
+        return 'Desconocido';
     }
-
 
     public static function getUsuario($usuario, $password)
     {
@@ -107,5 +97,4 @@ class UsuarioControlador
     }
 
 }
-
 ?>

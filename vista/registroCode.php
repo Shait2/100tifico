@@ -12,6 +12,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $txtPassword   = validar_campo($_POST["txtPassword"]);
         $txtRol        = validar_campo($_POST["txtRol"]);
 
+        $txtPassword = validar_campo($_POST["txtPassword"]);
+        $hashedPassword = password_hash($txtPassword, PASSWORD_DEFAULT);
+
+
         if ($txtRol === "cliente") {
             $txtPrivilegio = 2; // Cliente
             $txtCodigoSecreto = ""; // Valor vacío para cliente
@@ -49,4 +53,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 } else {
     header("location:registro.php?error=1");
 }
-
