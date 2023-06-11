@@ -1,6 +1,8 @@
 <?php
+include '../vista/partials/head.php';
 include '../controlador/UsuarioControlador.php';
 include '../helps/helps.php';
+
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

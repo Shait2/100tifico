@@ -2,7 +2,10 @@
 <html lang="es">
 
 <head>
-<?php session_start();?>
+  <?php
+  header("Content-Security-Policy: frame-ancestors 'none'");
+  ?>
+  <?php session_start(); ?>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,4 +23,5 @@
   <!-- Importamos reCaptcha API-->
   <script src='https://www.google.com/recaptcha/api.js' async defer></script>
 </head>
+
 </html>

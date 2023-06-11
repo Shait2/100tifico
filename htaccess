@@ -1,0 +1,17 @@
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+
+    Header unset X-Powered-By
+
+</IfModule>
+
+RewriteEngine On
+RewriteBase /web/
+RewriteRule ^$ view/index.php [L]
+RewriteRule ^index\.php$ view/index.php [L]
+RewriteRule ^servicio\.php$ view/servicio.php [L]
+RewriteRule ^controller/(.*)$ controller/$1 [L]
+
+
+
+
