@@ -1,5 +1,11 @@
-<?php include 'partials/head.php'; ?>
-<?php include 'partials/menu.php'; ?>
+<?php
+if (session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+}
+$_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+include 'partials/head.php'; 
+include 'partials/menu.php'; 
+?>
 
 <div class="container">
 	<div class="starter-template">
@@ -11,6 +17,9 @@
 				<div class="panel panel-default">
 					<div class="panel-body">
 						<form action="registroCode.php" method="POST" role="form">
+                            <!-- Aquí añadimos el token anti CSRF -->
+                            <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+
 							<legend>Registro de usuarios</legend>
 							<div class="form-group">
 								<label for="nombre">Nombre</label>

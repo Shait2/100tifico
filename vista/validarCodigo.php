@@ -10,6 +10,13 @@ $resultado = array();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["txtUsuario"]) && isset($_POST["txtPassword"])) {
 
+        // Verificación del token CSRF
+        if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+            $resultado = array("estado" => "false", "mensaje" => "Invalid CSRF token");
+            echo json_encode($resultado);
+            exit();
+        }
+
         if (isset($_POST["g-recaptcha-response"])) {
             $recaptcha_secret = '6LdSWxkmAAAAAEk3vlIc7g54jC_tQT_poNqNuPHy';
             $recaptcha_response = $_POST['g-recaptcha-response'];

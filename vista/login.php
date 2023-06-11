@@ -1,7 +1,13 @@
 <?php 
 include 'partials/head.php'; 
 include 'partials/menu.php'; 
+
 session_start();
+
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 $segundosRestantes = isset($_SESSION["bloqueo"]) ? $_SESSION["bloqueo"] - time() : 0;
 $bloqueado = $segundosRestantes > 0;
 ?>
@@ -15,7 +21,9 @@ $bloqueado = $segundosRestantes > 0;
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <form id="loginForm" action="../vista/validarCodigo.php" method="POST" role="form">
-                            <legend>Iniciar sesión</legend>
+                        <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+
+                        <legend>Iniciar sesión</legend>
 
                             <div class="form-group">
                                 <label for="usuario">Usuario</label>

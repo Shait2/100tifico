@@ -4,6 +4,12 @@ include '../helps/helps.php';
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Verificamos el token CSRF
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        echo "Error: Invalid CSRF token.";
+        exit();
+    }
+
     if (isset($_POST["txtNombre"]) && isset($_POST["txtEmail"]) && isset($_POST["txtUsuario"]) && isset($_POST["txtPassword"]) && isset($_POST["txtRol"])) {
 
         $txtNombre     = validar_campo($_POST["txtNombre"]);
